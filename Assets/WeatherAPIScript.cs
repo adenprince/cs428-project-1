@@ -6,17 +6,26 @@ using TMPro;
 public class WeatherAPIScript : MonoBehaviour
 {
     public GameObject weatherTextObject;
-        // add your personal API key after APPID= and before &units=
-       string url = "http://api.openweathermap.org/data/2.5/weather?lat=33.39&lon=-104.5&APPID=c687c5791db011c949465e8ccc9dc3f4&units=imperial";
+
+    public enum UnitSystem
+    {
+        Metric,
+        Imperial
+    }
+
+    public UnitSystem unitSystem;
+
+    string url;
 
    
     void Start()
     {
+        string units = (unitSystem == UnitSystem.Metric) ? "metric" : "imperial";
+        url = "http://api.openweathermap.org/data/2.5/weather?lat=33.39&lon=-104.5&APPID=c687c5791db011c949465e8ccc9dc3f4&units=" + units;
 
-    // wait a couple seconds to start and then refresh every 900 seconds
-
-       InvokeRepeating("GetDataFromWeb", 2f, 900f);
-   }
+        // wait a couple seconds to start and then refresh every 900 seconds
+        InvokeRepeating("GetDataFromWeb", 2f, 900f);
+    }
 
    void GetDataFromWeb()
    {
@@ -53,7 +62,8 @@ public class WeatherAPIScript : MonoBehaviour
                 string conditions = webRequest.downloadHandler.text.Substring(startConditions+7, (endConditions-startConditions-8));
                 //Debug.Log(conditions);
 
-                weatherTextObject.GetComponent<TextMeshPro>().text = "" + easyTempF.ToString() + "°F\n" + conditions;
+                string temperatureUnit = (unitSystem == UnitSystem.Metric) ? "C" : "F";
+                weatherTextObject.GetComponent<TextMeshPro>().text = "" + easyTempF.ToString() + "°" + temperatureUnit + "\n" + conditions;
             }
         }
     }
