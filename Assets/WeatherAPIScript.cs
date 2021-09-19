@@ -7,6 +7,9 @@ public class WeatherAPIScript : MonoBehaviour
 {
     public GameObject weatherTextObject;
 
+    public float latitude;
+    public float longitude;
+
     public enum UnitSystem
     {
         Metric,
@@ -21,7 +24,8 @@ public class WeatherAPIScript : MonoBehaviour
     void Start()
     {
         string units = (unitSystem == UnitSystem.Metric) ? "metric" : "imperial";
-        url = "http://api.openweathermap.org/data/2.5/weather?lat=33.39&lon=-104.5&APPID=c687c5791db011c949465e8ccc9dc3f4&units=" + units;
+        url = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude +
+            "&APPID=c687c5791db011c949465e8ccc9dc3f4&units=" + units;
 
         // wait a couple seconds to start and then refresh every 900 seconds
         InvokeRepeating("GetDataFromWeb", 2f, 900f);

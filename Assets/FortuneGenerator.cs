@@ -5,6 +5,7 @@ public class FortuneGenerator : MonoBehaviour
 {
     public TextMeshPro fortuneText;
     public Transform cameraTransform;
+    public AudioSource fortuneSound;
     
     public enum SayingType
     {
@@ -18,7 +19,7 @@ public class FortuneGenerator : MonoBehaviour
         "As I see it, yes.", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Reply hazy, try again", "Ask again later",
         "Better not tell you now", "Cannot predict now", "Concentrate and ask again", "Don't count on it", "My reply is no",
         "My sources say no", "Outlook not so good", "Very doubtful" };
-    string[] modernSayings = { "B)", ":D", ";)", ":)", ":/", "(._.)", ".-.", ":|", "D:", "＞_＜", ":(", "/_\\" };
+    string[] modernSayings = { "B)", ":D", ";)", ":)", ":/", "(._.)", ".-.", ":|", "D:", ">_<", ":(", "/_\\" };
 
     enum OrientationState
     {
@@ -42,6 +43,7 @@ public class FortuneGenerator : MonoBehaviour
             {
                 if (orientationState == OrientationState.TurnedDownAfterTurnedUp)
                 {
+                    fortuneSound.Play();
                     fortuneText.text = GenerateFortune();
                 }
 
